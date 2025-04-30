@@ -1,0 +1,33 @@
+body {
+  font-family: Arial, sans-serif;
+  width: 300px;
+  padding: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#query-input {
+  width: 90%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+#search-btn {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+#results {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.result-item {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
