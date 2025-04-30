@@ -13,6 +13,7 @@ def get_embedding(text: str) -> np.ndarray:
         A numpy array (float32) representing the embedding.
     If the external API call fails, a random embedding is returned.
     """
+    print("[Utils] Calling embedding API for text length:", len(text))
     embed_api_url = "http://localhost:11434/api/embeddings"
     payload = {
         "model": "nomic-embed-text",  # Specify the model to use
@@ -23,10 +24,11 @@ def get_embedding(text: str) -> np.ndarray:
         response.raise_for_status()
         data = response.json()
         embedding = np.array(data.get("embedding"), dtype="float32")
+        print("[Utils] Received embedding:", embedding.shape)
         if embedding.shape[0] != embedding_dimension:
             raise ValueError("Returned embedding dimension does not match expectation.")
         return embedding
     except Exception as e:
-        print(f"Error calling the embedding API: {e}")
+        print(f"[Utils] Error calling the embedding API: {e}")
         # Fallback: generate a random embedding, useful for demonstration
         return np.random.rand(embedding_dimension).astype("float32")

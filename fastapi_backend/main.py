@@ -21,7 +21,9 @@ async def index_endpoint(page: PageContent):
     Endpoint to index a web page.
     Receives a URL & text, computes its embedding, and adds it to the FAISS index.
     """
+    print(f"[FastAPI] /index received for URL: {page.url}")
     idx = await index_page(page.url, page.text)
+    print(f"[FastAPI] Indexed page with id: {idx}")
     return {"status": "success", "id": idx}
 
 @app.post("/query")
@@ -30,7 +32,9 @@ async def query_endpoint(q: QueryRequest):
     Endpoint to retrieve pages.
     Given a query string, computes its embedding and returns the top matching pages.
     """
+    print(f"[FastAPI] /query received for query: {q.query}")
     results = await query_pages(q.query)
+    print(f"[FastAPI] Query results: {results}")
     return {"results": results}
 
 @app.get("/report/{id}")

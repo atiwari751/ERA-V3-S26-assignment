@@ -12,7 +12,9 @@ async def index_page(url: str, text: str) -> int:
     Returns:
         The new document's index ID.
     """
+    print(f"[Indexing] Starting index for URL: {url[:50]}...")  # shorten if too long
     vector = get_embedding(text)
+    print(f"[Indexing] Obtained embedding of shape: {vector.shape}")
     if vector.shape[0] != embedding_dimension:
         raise ValueError("Embedding dimension mismatch.")
     
@@ -28,5 +30,5 @@ async def index_page(url: str, text: str) -> int:
         "timestamp": time.time()
     })
     
-    print(f"Indexed page: {url} with FAISS ID: {idx}")
+    print(f"[Indexing] Indexed page: {url} with FAISS ID: {idx}")
     return idx

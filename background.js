@@ -6,23 +6,27 @@ const FASTAPI_BASE_URL = "http://localhost:8000";
 // Listen for messages from content and popup scripts.
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.action === "pageContent") {
+        console.log("[Background] Received pageContent message for URL:", msg.url);
         // Message from content.js: index the current page.
         // msg should contain: { url, text }
         indexPageViaBackend(msg.url, msg.text);
     } else if (msg.action === "retrieve") {
+        console.log("[Background] Received retrieve message with query:", msg.query);
         // Message from popup.js: retrieve pages similar to the query.
         // msg should contain: { query }
         retrievePagesViaBackend(msg.query)
             .then(results => {
+                console.log("[Background] Retrieval results:", results);
                 sendResponse({ results: results });
             })
             .catch(err => {
-                console.error("Error retrieving pages:", err);
+                console.error("[Background] Error retrieving pages:", err);
                 sendResponse({ results: [] });
             });
         // Return true to keep the messaging channel open for asynchronous response.
         return true;
     } else if (msg.action === "openAndHighlight") {
+        console.log("[Background] Open and highlight:", msg.result.url, "for query:", msg.query);
         // Message from popup.js: open page and highlight query text.
         // msg should contain: { result, query }
         openAndHighlight(msg.result.url, msg.query);

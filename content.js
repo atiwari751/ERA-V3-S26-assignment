@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Delay a little to ensure most of the page has loaded.
   setTimeout(() => {
     const pageText = document.body.innerText;
+    console.log("[Content Script] Sending page data to background:", window.location.href);
     chrome.runtime.sendMessage({
       action: "pageContent",
       url: window.location.href,
