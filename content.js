@@ -1,18 +1,31 @@
 // content.js
 
-// When the DOM is loaded, send the page text and URL to the background for indexing.
-document.addEventListener("DOMContentLoaded", function() {
-  // Delay a little to ensure most of the page has loaded.
+console.log("[Content Script] Injected into:", window.location.href);
+
+// Since we are injecting at document_start, the DOM may not be ready,
+// so check if we need to wait until later:
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("[Content Script] DOMContentLoaded fired");
+    sendPageData();
+  });
+} else {
+  console.log("[Content Script] Document already loaded");
+  sendPageData();
+}
+
+function sendPageData() {
+  // A small delay can be used if necessary.
   setTimeout(() => {
-    const pageText = document.body.innerText;
+    const pageText = document.body && document.body.innerText ? document.body.innerText : "";
     console.log("[Content Script] Sending page data to background:", window.location.href);
     chrome.runtime.sendMessage({
       action: "pageContent",
       url: window.location.href,
       text: pageText
     });
-  }, 1000);
-});
+  }, 500);
+}
 
 // Listen for messages from the background script to highlight text.
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
