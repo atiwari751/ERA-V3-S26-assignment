@@ -113,9 +113,4 @@ Check out the following video to see the plugin in action on YouTube:
 3. Click on **Load unpacked** and select the directory containing the extension's files.
 4. Verify that the Ollama external embedding API and FastAPI backend are running.
 
-## Contributing
-Contributions and enhancements are welcome. If you have suggestions or improvements, please open an issue or submit a pull request.
-
-## License
-This project is licensed under the MIT License. (Update the license as appropriate.)
 
