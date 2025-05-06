@@ -2,7 +2,7 @@ import numpy as np
 from vector_index import faiss_index, page_metadata, embedding_dimension
 from utils import get_embedding
 
-async def query_pages(query: str, topK: int = 3):
+async def query_pages(query: str, topK: int = 2):
     """
     Computes an embedding for the provided query using the external
     'nomic-embed-text' model, then uses the FAISS index to find the top K
